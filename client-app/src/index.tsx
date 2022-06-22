@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import "semantic-ui-css/semantic.min.css";
 import "./app/layout/styles.css";
 import App from "./app/layout/App";
+import "react-calendar/dist/Calendar.css";
 import reportWebVitals from "./reportWebVitals";
 import { StoreContext, store } from "./app/stores/store";
 import { BrowserRouter, Routes } from "react-router-dom";
@@ -13,7 +14,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <StoreContext.Provider value={store}>
     <BrowserRouter>
-        <App />
+      <App />
     </BrowserRouter>
   </StoreContext.Provider>
 );
