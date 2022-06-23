@@ -1,5 +1,8 @@
 using System;
 using API.Extensions;
+using API.MiddleWare;
+using Application.Activities;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,7 +14,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddFluentValidation(config =>
+{
+  config.RegisterValidatorsFromAssemblyContaining<Create>();
+});
 
 var config = builder.Configuration;
 var env = builder.Environment;
@@ -43,6 +49,7 @@ await builder.AddMirageAndSeedData(app);
 //End custom auto update database 
 
 // Configure the HTTP request pipeline.
+app.UseMiddleware<ExceptionMiddleware>();
 if (app.Environment.IsDevelopment())
 {
   app.UseSwagger();

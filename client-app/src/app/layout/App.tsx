@@ -1,13 +1,16 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Container } from "semantic-ui-react";
 import NavBar from "./NavBar";
 import ActivityDashboard from "../../features/activities/dashboard/ActivitiesDashboard";
-
 import { observer } from "mobx-react-lite";
-import { Route, Router, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import HomePage from "../../features/home/HomePage";
 import ActivityForm from "../../features/activities/form/ActivityForm";
 import ActivityDetail from "../../features/activities/details/ActivityDetails";
+import TestErrors from "../../features/errors/TestError";
+import { ToastContainer } from "react-toastify";
+import NotFound from "../../features/errors/NotFound";
+import ServerError from "../../features/errors/ServerError";
 
 function App() {
   return (
@@ -23,6 +26,7 @@ function App() {
     const location = useLocation();
     return (
       <>
+        <ToastContainer position="bottom-right" hideProgressBar />
         <NavBar />
         <Container style={{ marginTop: "7em" }}>
           <Routes>
@@ -36,6 +40,9 @@ function App() {
               path={"/manage/:id"}
               element={<ActivityForm key={location.key} />}
             />
+            <Route path="/errors" element={<TestErrors />} />
+            <Route path="/server-error" element={<ServerError />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Container>
       </>
