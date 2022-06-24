@@ -3,7 +3,9 @@ using API.Extensions;
 using API.MiddleWare;
 using Application.Activities;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -14,7 +16,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers().AddFluentValidation(config =>
+builder.Services.AddControllers(opt => {
+  var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+  opt.Filters.Add(new AuthorizeFilter(policy));
+}).AddFluentValidation(config =>
 {
   config.RegisterValidatorsFromAssemblyContaining<Create>();
 });
@@ -28,6 +33,7 @@ builder.Services.AddSwaggerGen();
 
 //Extend to Extension MyCustom
 builder.Services.AddApplicationService(config);
+builder.Services.AddIdentityService(config);
 
 var app = builder.Build();
 
@@ -62,6 +68,7 @@ app.UseRouting();
 
 app.UseCors("CorsPolicy");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
