@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container } from "semantic-ui-react";
 import NavBar from "./NavBar";
 import ActivityDashboard from "../../features/activities/dashboard/ActivitiesDashboard";
@@ -11,10 +11,28 @@ import TestErrors from "../../features/errors/TestError";
 import { ToastContainer } from "react-toastify";
 import NotFound from "../../features/errors/NotFound";
 import ServerError from "../../features/errors/ServerError";
+import LoginForm from "../../features/user/LoginForm";
+import { useStore } from "../stores/store";
+import LoadingComponent from "./LoadingComponent";
+import ModalContainer from "../common/modals/ModalContainer";
 
 function App() {
+  const { commonStore, userStore } = useStore();
+
+  useEffect(() => {
+    if (commonStore.token) {
+      userStore.getUser().finally(() => commonStore.setAppLoaded());
+    } else {
+      commonStore.setAppLoaded();
+    }
+  }, [commonStore, userStore]);
+
+  if (!commonStore.appLoaded)
+    return <LoadingComponent content="Loading app..." />;
+
   return (
     <>
+      <ModalContainer />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path={"/*"} element={<Activities />} />
@@ -24,6 +42,7 @@ function App() {
 
   function Activities() {
     const location = useLocation();
+
     return (
       <>
         <ToastContainer position="bottom-right" hideProgressBar />
@@ -42,6 +61,7 @@ function App() {
             />
             <Route path="/errors" element={<TestErrors />} />
             <Route path="/server-error" element={<ServerError />} />
+            <Route path="/login" element={<LoginForm />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Container>
