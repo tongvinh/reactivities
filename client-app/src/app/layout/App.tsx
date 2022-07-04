@@ -15,6 +15,7 @@ import LoginForm from "../../features/user/LoginForm";
 import { useStore } from "../stores/store";
 import LoadingComponent from "./LoadingComponent";
 import ModalContainer from "../common/modals/ModalContainer";
+import ProfilePage from "../../features/profiles/ProfilePage";
 
 function App() {
   const { commonStore, userStore } = useStore();
@@ -59,6 +60,7 @@ function App() {
               path={"/manage/:id"}
               element={<ActivityForm key={location.key} />}
             />
+            <Route path="/profiles/:username" element={<ProfilePage />} />
             <Route path="/errors" element={<TestErrors />} />
             <Route path="/server-error" element={<ServerError />} />
             <Route path="/login" element={<LoginForm />} />
