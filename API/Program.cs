@@ -1,6 +1,7 @@
 using System;
 using API.Extensions;
 using API.MiddleWare;
+using API.SignalR;
 using Application.Activities;
 using FluentValidation.AspNetCore;
 using Infrastructure.Security;
@@ -74,5 +75,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<ChatHub>("/chat");
 
 await app.RunAsync();

@@ -164,7 +164,7 @@ export default class ActivityStore {
     this.loading = true;
     try {
       await agent.Activities.attend(this.selectedActivity!.id);
-      runInAction(() =>{
+      runInAction(() => {
         this.selectedActivity!.isCancelled = !this.selectedActivity?.isCancelled;
         this.activityRegistry.set(this.selectedActivity!.id, this.selectedActivity!);
       });
@@ -173,5 +173,9 @@ export default class ActivityStore {
     } finally {
       runInAction(() => this.loading = false);
     }
+  }
+
+  clearSelectedActivity = () => {
+    this.selectedActivity = undefined;
   }
 }
