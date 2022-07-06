@@ -1,12 +1,10 @@
 import React from "react";
 import { Profile } from "../../app/models/profile";
 import {
-  Button,
   Divider,
   Grid,
   Header,
   Item,
-  Reveal,
   Segment,
   Statistic,
 } from "semantic-ui-react";
