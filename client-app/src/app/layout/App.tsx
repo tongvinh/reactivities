@@ -11,11 +11,11 @@ import TestErrors from "../../features/errors/TestError";
 import { ToastContainer } from "react-toastify";
 import NotFound from "../../features/errors/NotFound";
 import ServerError from "../../features/errors/ServerError";
-import LoginForm from "../../features/user/LoginForm";
 import { useStore } from "../stores/store";
 import LoadingComponent from "./LoadingComponent";
 import ModalContainer from "../common/modals/ModalContainer";
 import ProfilePage from "../../features/profiles/ProfilePage";
+import PrivateRoute from "./PrivateRoute";
 
 function App() {
   const { commonStore, userStore } = useStore();
@@ -50,20 +50,55 @@ function App() {
         <NavBar />
         <Container style={{ marginTop: "7em" }}>
           <Routes>
-            <Route path="/activities" element={<ActivityDashboard />} />
-            <Route path="/activities/:id" element={<ActivityDetail />} />
+            <Route
+              path="/activities"
+              element={
+                <PrivateRoute>
+                  <ActivityDashboard />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/activities/:id"
+              element={
+                <PrivateRoute>
+                  <ActivityDetail />
+                </PrivateRoute>
+              }
+            />
             <Route
               path={"/createActivity"}
-              element={<ActivityForm key={location.key} />}
+              element={
+                <PrivateRoute>
+                  <ActivityForm key={location.key} />
+                </PrivateRoute>
+              }
             />
             <Route
               path={"/manage/:id"}
-              element={<ActivityForm key={location.key} />}
+              element={
+                <PrivateRoute>
+                  <ActivityForm key={location.key} />
+                </PrivateRoute>
+              }
             />
-            <Route path="/profiles/:username" element={<ProfilePage />} />
-            <Route path="/errors" element={<TestErrors />} />
+            <Route
+              path="/profiles/:username"
+              element={
+                <PrivateRoute>
+                  <ProfilePage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/errors"
+              element={
+                <PrivateRoute>
+                  <TestErrors />
+                </PrivateRoute>
+              }
+            />
             <Route path="/server-error" element={<ServerError />} />
-            <Route path="/login" element={<LoginForm />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Container>

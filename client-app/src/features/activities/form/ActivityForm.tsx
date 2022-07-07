@@ -12,31 +12,32 @@ import MyTextArea from "../../../app/common/form/MyTextArea";
 import MySelectInput from "../../../app/common/form/MySelectInput";
 import { categoryOptions } from "../../../app/common/options/catetogyOptions";
 import MyDateInput from "../../../app/common/form/MyDateInput";
-import { Activity, ActivityFormValues } from '../../../app/models/activity';
+import { ActivityFormValues } from "../../../app/models/activity";
 
 export default observer(function ActivityForm() {
   const navigate = useNavigate();
   const { activityStore } = useStore();
-  const {
-    createActivity,
-    updateActivity,
-    loadActivity,
-    loadingInitial,
-  } = activityStore;
+  const { createActivity, updateActivity, loadActivity, loadingInitial } =
+    activityStore;
   const { id } = useParams<{ id: string }>();
-  const [activity, setActivity] = useState<ActivityFormValues>(new ActivityFormValues());
+  const [activity, setActivity] = useState<ActivityFormValues>(
+    new ActivityFormValues()
+  );
 
   const validationSchema = Yup.object({
     title: Yup.string().required("The activity title is required"),
     description: Yup.string().required("The activity description is required"),
     category: Yup.string().required(),
-    date: Yup.string().required('Date is required').nullable(),
+    date: Yup.string().required("Date is required").nullable(),
     venue: Yup.string().required(),
     city: Yup.string().required(),
   });
 
   useEffect(() => {
-    if (id) loadActivity(id).then((activity) => setActivity(new ActivityFormValues(activity)));
+    if (id)
+      loadActivity(id).then((activity) =>
+        setActivity(new ActivityFormValues(activity))
+      );
   }, [id, loadActivity]);
 
   function handleFormSubmit(activity: ActivityFormValues) {
@@ -59,7 +60,7 @@ export default observer(function ActivityForm() {
 
   return (
     <Segment clearing>
-      <Header content='Activity Details' sub color='teal'/>
+      <Header content="Activity Details" sub color="teal" />
       <Formik
         validationSchema={validationSchema}
         enableReinitialize
@@ -89,7 +90,7 @@ export default observer(function ActivityForm() {
               timeCaption="time"
               dateFormat="MMMM d, yyyy h:mm aa"
             />
-            <Header content='Location Details' sub color="teal"/>
+            <Header content="Location Details" sub color="teal" />
             <MyTextInput placeholder="City" name="city" />
             <MyTextInput placeholder="Venue" name="venue" />
             <Button

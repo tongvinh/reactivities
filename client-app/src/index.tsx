@@ -10,6 +10,7 @@ import reportWebVitals from "./reportWebVitals";
 import { StoreContext, store } from "./app/stores/store";
 import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 import { createBrowserHistory } from "history";
+import ScrollToTop from "./app/layout/ScrollToTop";
 
 export const history = createBrowserHistory();
 
@@ -19,6 +20,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <StoreContext.Provider value={store}>
     <HistoryRouter history={history}>
+      <ScrollToTop />
       <App />
     </HistoryRouter>
   </StoreContext.Provider>
