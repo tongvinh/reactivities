@@ -16,6 +16,8 @@ import LoadingComponent from "./LoadingComponent";
 import ModalContainer from "../common/modals/ModalContainer";
 import ProfilePage from "../../features/profiles/ProfilePage";
 import PrivateRoute from "./PrivateRoute";
+import RegisterSuccess from "../../features/user/RegisterSuccess";
+import ConfirmEmail from '../../features/user/ConfirmEmail';
 
 function App() {
   const { commonStore, userStore } = useStore();
@@ -100,7 +102,15 @@ function App() {
               }
             />
             <Route path="/server-error" element={<ServerError />} />
-            <Route path="*" element={<NotFound />} />
+            <Route
+              path="/account/registerSuccess"
+              element={<RegisterSuccess />}
+            />
+            <Route
+              path="/account/verifyEmail"
+              element={<ConfirmEmail />}
+            />
+            <Route element={<NotFound />} />
           </Routes>
         </Container>
       </>
