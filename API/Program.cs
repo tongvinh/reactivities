@@ -70,7 +70,7 @@ app.UseCsp(opt => opt
   .FontSources(s => s.Self().CustomSources("https://fonts.gstatic.com", " https://cdn.jsdelivr.net", "data:"))
   .FormActions(s => s.Self())
   .FrameAncestors(s => s.Self())
-  .ImageSources(s => s.Self().CustomSources("https://res.cloudinary.com", "https://www.facebook.com", "https://platform-lookaside.fbsbx.com"))
+  .ImageSources(s => s.Self().CustomSources("https://res.cloudinary.com", "https://www.facebook.com", "https://platform-lookaside.fbsbx.com","data:"))
   .ScriptSources(s => s.Self().CustomSources("sha256-VUoht8cz6GjVqBKNafdvH0USmsN7IAav2ctZx9AnyuQ=", "https://connect.facebook.net"))
   );
 
